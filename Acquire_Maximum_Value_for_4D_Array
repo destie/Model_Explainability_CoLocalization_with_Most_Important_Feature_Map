@@ -1,0 +1,19 @@
+import numpy as np
+#Some simple code to get the maximum value for a 4D Array.
+#Hopefully this is helpful should someone need it. 
+
+#Get maximum value for each array
+z = 0
+array_max = []
+while z < feature_maps.shape[3]:
+     arr = feature_maps[0,:,:,z]
+     maxarr = arr.max()
+     array_max.append(maxarr)
+     z = z+1
+               
+#Get indices of top 3
+array_max = np.array(array_max)
+
+#Getting top 3 largest values
+n = 1
+x = np.argsort(array_max)[::-1][:n]
