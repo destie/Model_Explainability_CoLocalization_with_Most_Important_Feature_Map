@@ -1,0 +1,27 @@
+import numpy as np
+#Very simple code for taking the output of an array and mapping it to a new black space. 
+
+#MAKING NEw_ARRAY values of image - makes it all black
+new_array = np.zeros((img2.shape))
+
+#Adding in all predictive areas from top array
+#Get the reference array first
+#x here is the top feature map - defined by: x = np.argsort(array_max)[::-1][:n]
+for k in x:  
+  reference = feature_maps[0,:,:,k]
+  
+  #MAKING NEw_ARRAY values of image - makes it all black
+  #Generate range the size of the feature map 
+  i_list = range(0,16)
+
+ #One could do this step using i,j, for zip(i_list, j_list) but I wrote this in a way to make my brain not break.  
+  for i in i_list:  
+      for j in i_list:
+          #Get the coordinate from within the original reference image
+           test = reference[i,j].astype(int)
+           #Save the coordinate to the new black array 
+           #I explicitly defined the size here but you'd need the m x n (in this case 16 is my m and 32 is my n) to map back to the size of your original image.
+           new_array[(i*32):((i*32)+32),(j*32):((j*32)+32)] = np.where(test!=0, img2[(i*32):((i*32)+32),(j*32):((j*32)+32)], new_array[(i*32):((i*32)+32),(j*32):((j*32)+32)])
+
+           #Used this line to get the indices of everything non-zero in the most important feature map 
+           indices = np.argwhere(new_array >0)
