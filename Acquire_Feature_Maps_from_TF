@@ -1,0 +1,21 @@
+import tensorflow as tf
+from tensorflow import keras
+
+#Some simple code to access the feature maps in tensorflow should you need it. 
+#Again this isn't rocket science, but is hopefully helpful
+
+#Load in the image - I really like keras.utils. My target size here matches the size required by the model
+img = tf.keras.utils.load_img(os.path.join(directory, file), target_size=(512,512))
+            
+# convert the image to an array
+img = tf.keras.utils.img_to_array(img)
+
+            
+# expand dimensions so that it represents a single 'sample', as TF requires 4 dimensions and images are usually 3 (The fourth being the k representative of the feature map)
+img = tf.expand_dims(img, axis=0)
+            
+# get feature map - here I have set "model" to be the first hidden layer by calling model.layers(-1)
+feature_maps = model.predict(img)
+
+#This is handy if you need to reshape your feature maps. So in my case for the base model it's already in this format. For custom sequential models I often need to reshape my predictive layer back to the feature maps themselves as I frequently flatten them for model predictive purposes. 
+#feature_maps = model.predict(img).reshape(1, 16, 16, 2048)
