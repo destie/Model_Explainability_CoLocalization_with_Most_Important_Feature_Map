@@ -1,0 +1,28 @@
+#Some simple code to identify central coordinates from a colored box or segmentation. 
+#This isn't rocket science, but hopefully helpful should someone need it.
+
+from PIL import Image
+import numpy as np
+import cv2
+
+#I included this here because my model type required a specific size later so I wanted the coordinates to line up
+target_size = 512
+
+#Set your colors here - this is for a red outline in BGR
+lower_color = (0,0,200)
+upper_color = (50,50,255)
+
+
+#Load the image
+image = load_img(os.path.join(otherdirectory, otherfile), target_size=(target_size, target_size))
+
+# convert the image to an array
+image = img_to_array(image)
+
+#Convert color and image type to int (I picked BGR for simplicity, you could pick whatever you need here)
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(int)
+plt.imshow(image)
+                
+rangey = np.argwhere(cv2.inRange(image,lower_color,upper_color))
+                
+center = rangey[-1] - rangey[0] 
